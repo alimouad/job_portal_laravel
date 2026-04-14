@@ -18,6 +18,8 @@ const isJobSeeker = computed(() => {
   return isAuthenticated.value && !isEmployer.value;
 });
 
+const currentUser = computed(() => user.value);
+
 const loadCurrentUser = async () => {
   const storedUser = localStorage.getItem('auth_user');
 
@@ -96,6 +98,10 @@ onMounted(loadCurrentUser);
             <RouterLink v-if="isEmployer" to="/employer/jobs/create" class="hidden lg:flex items-center gap-2 rounded-xl bg-[#111] px-4 py-2 text-[10px] font-black uppercase tracking-widest text-white hover:bg-[#FFCD1F] hover:text-black transition-all">
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"></path></svg>
               Post Job
+            </RouterLink>
+
+            <RouterLink v-if="isEmployer" to="/employer/applications" class="hidden lg:flex items-center gap-2 rounded-xl border border-[#E9E1C8] bg-white px-4 py-2 text-[10px] font-black uppercase tracking-widest text-[#1A1A1A] hover:border-[#FFCD1F] transition-all">
+              Applications
             </RouterLink>
 
           </div>

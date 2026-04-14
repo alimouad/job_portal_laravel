@@ -16,6 +16,7 @@ import MyCandidatures from '@/pages/user/MyCandidatures.vue';
 import EmployerCompany from '@/pages/employer/Company.vue';
 import EmployerHome from '@/pages/employer/Home.vue';
 import EmployerPostJob from '@/pages/employer/PostJob.vue';
+import EmployerApplications from '@/pages/employer/Applications.vue';
 
 
 const router = createRouter({
@@ -85,6 +86,11 @@ const router = createRouter({
             path:'/employer/jobs/create',
             name: 'employer-post-job',
             component: EmployerPostJob,
+        },
+        {
+            path:'/employer/applications',
+            name: 'employer-applications',
+            component: EmployerApplications,
         },
     ],
 });
