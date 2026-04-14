@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Page-1" id="bzT-w9rRKjiN19-GhcqH">
-        <mxGraphModel dx="581" dy="506" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="light-dark(#FFFFFF,#FFFFFF)" math="0" shadow="1">
+        <mxGraphModel dx="867" dy="586" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="light-dark(#FFFFFF,#FFFFFF)" math="0" shadow="1">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -99,7 +99,7 @@
                         <mxPoint x="838" y="515" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="0D1FyfwcscbY9d6dSdOC-14" value="Manage Posts" style="ellipse;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#09555B;strokeColor=#BAC8D3;fontColor=#EEEEEE;" parent="Defqs_GqsFso5bVtSl9F-5" vertex="1">
+                <mxCell id="0D1FyfwcscbY9d6dSdOC-14" value="Manage Applications" style="ellipse;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#09555B;strokeColor=#BAC8D3;fontColor=#EEEEEE;" parent="Defqs_GqsFso5bVtSl9F-5" vertex="1">
                     <mxGeometry x="133.5" y="375" width="120" height="43" as="geometry"/>
                 </mxCell>
                 <mxCell id="0D1FyfwcscbY9d6dSdOC-27" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;labelBackgroundColor=none;fontColor=default;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#0B4D6A;" parent="Defqs_GqsFso5bVtSl9F-5" source="Defqs_GqsFso5bVtSl9F-1" target="Defqs_GqsFso5bVtSl9F-73" edge="1">
@@ -243,10 +243,10 @@
                         <mxPoint x="746" y="545" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="18" value="Manage Categories" style="ellipse;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#09555B;strokeColor=#BAC8D3;fontColor=#EEEEEE;" vertex="1" parent="Defqs_GqsFso5bVtSl9F-5">
+                <mxCell id="18" value="Manage Categories" style="ellipse;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#09555B;strokeColor=#BAC8D3;fontColor=#EEEEEE;" parent="Defqs_GqsFso5bVtSl9F-5" vertex="1">
                     <mxGeometry x="133.5" y="176" width="120" height="42" as="geometry"/>
                 </mxCell>
-                <mxCell id="19" value="" style="curved=1;endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=none;fontColor=default;strokeColor=#0B4D6A;" edge="1" parent="Defqs_GqsFso5bVtSl9F-5" source="Defqs_GqsFso5bVtSl9F-3" target="18">
+                <mxCell id="19" value="" style="curved=1;endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=none;fontColor=default;strokeColor=#0B4D6A;" parent="Defqs_GqsFso5bVtSl9F-5" source="Defqs_GqsFso5bVtSl9F-3" target="18" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="18" y="163"/>
@@ -255,7 +255,7 @@
                         <mxPoint x="143" y="159" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="20" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;labelBackgroundColor=none;fontColor=default;entryX=0.45;entryY=-0.01;entryDx=0;entryDy=0;strokeColor=#0B4D6A;entryPerimeter=0;" edge="1" parent="Defqs_GqsFso5bVtSl9F-5" source="18">
+                <mxCell id="20" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;labelBackgroundColor=none;fontColor=default;entryX=0.45;entryY=-0.01;entryDx=0;entryDy=0;strokeColor=#0B4D6A;entryPerimeter=0;" parent="Defqs_GqsFso5bVtSl9F-5" source="18" edge="1">
                     <mxGeometry width="160" relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="478" y="284"/>

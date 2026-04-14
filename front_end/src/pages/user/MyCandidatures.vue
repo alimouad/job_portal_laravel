@@ -62,7 +62,7 @@ onMounted(loadApplications);
         <div class="absolute left-10 bottom-20 h-80 w-80 rounded-full bg-yellow-100/20 blur-[100px]"></div>
       </div>
 
-      <div class="mx-auto max-w-5xl px-4 py-12 md:px-8">
+      <div class="mx-auto max-w-6xl px-4 py-12 md:px-8">
         <header class="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between border-b border-slate-100 pb-10">
           <div>
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-100 shadow-sm mb-3">

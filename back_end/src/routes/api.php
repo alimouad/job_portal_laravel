@@ -9,6 +9,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\FavouriteController;
+use App\Http\Controllers\ProfileController;
 
 
 Route::get('/jobs/search', [JobController::class, 'search']);
@@ -22,6 +23,13 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user()->load('profile');
+    });
+
+    Route::get('/profile', [ProfileController::class, 'show']);
+    Route::put('/profile', [ProfileController::class, 'update']);
+
     Route::post('/jobs/{id}/apply', [JobController::class, 'apply']);
     Route::get('/my-applications', [ApplicationController::class, 'myApplications']);
 

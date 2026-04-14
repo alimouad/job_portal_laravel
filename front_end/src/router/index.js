@@ -6,6 +6,8 @@ import axiosClient from '@/axios.js';
 import Login from '@/pages/auth/Login.vue';  
 import Register from '@/pages/auth/Register.vue';
 import Home from '@/pages/Home.vue';
+import Feed from '@/pages/user/Feed.vue';
+import Profile from '@/pages/user/Profile.vue';
 import CompaniesIndex from '@/pages/user/companies.vue';
 import UserJobs from '@/pages/user/jobs.vue';
 import ApplyJob from '@/pages/user/ApplyJob.vue';
@@ -20,9 +22,14 @@ const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
-            path: '/home',
+            path: '/',
             name: 'home',
             component: Home,
+        },
+        {
+            path: '/feed',
+            name: 'feed',
+            component: Feed,
         },
         {
             path: '/jobs',
@@ -43,6 +50,11 @@ const router = createRouter({
             path: '/my-candidatures',
             name: 'my-candidatures',
             component: MyCandidatures,
+        },
+        {
+            path: '/profile',
+            name: 'profile',
+            component: Profile,
         },
         {
             path: '/companies',
