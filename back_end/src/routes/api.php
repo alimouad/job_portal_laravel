@@ -32,6 +32,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/jobs/{id}/apply', [JobController::class, 'apply']);
     Route::get('/my-applications', [ApplicationController::class, 'myApplications']);
+    Route::get('/employer/applications', [ApplicationController::class, 'employerApplications']);
+    Route::put('/employer/applications/{id}', [ApplicationController::class, 'updateEmployerApplication']);
 
     Route::get('/favourites', [FavouriteController::class, 'index']);
     Route::post('/favourites', [FavouriteController::class, 'store']);
