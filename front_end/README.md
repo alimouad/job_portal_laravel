@@ -1,38 +1,150 @@
-# front_end
+# Job Finder Platform - Frontend
 
-This template should help get you started developing with Vue 3 in Vite.
+Vue 3 frontend for the Job Finder Platform, built with Vite and Tailwind CSS v4.
 
-## Recommended IDE Setup
+This app includes:
+- Public pages (home, jobs, companies, auth)
+- Job seeker pages (profile, favourites, candidatures, apply)
+- Employer pages (company profile, post jobs, applications)
+- Admin dashboard page
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Tech Stack
 
-## Recommended Browser Setup
+- Vue 3
+- Vue Router
+- Axios
+- Tailwind CSS v4 via @tailwindcss/vite
+- Vite
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+## Requirements
 
-## Customize configuration
+- Node.js: ^20.19.0 or >=22.12.0
+- npm
+- Backend API running locally (Laravel)
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+## Install
 
-## Project Setup
-
-```sh
+```bash
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+## Run in Development
 
-```sh
+```bash
 npm run dev
 ```
 
-### Compile and Minify for Production
+Frontend runs on:
+- http://localhost:3000
 
-```sh
+API proxy is configured in [vite.config.js](vite.config.js):
+- /api -> http://localhost:8000
+
+## Build for Production
+
+```bash
 npm run build
 ```
+
+## Preview Production Build
+
+```bash
+npm run preview
+```
+
+## Project Structure
+
+```text
+front_end/
+  src/
+    assets/
+    components/
+    layouts/
+    pages/
+      admin/
+      auth/
+      employer/
+      user/
+    router/
+    axios.js
+    main.js
+```
+
+## Frontend Routes
+
+Defined in [src/router/index.js](src/router/index.js):
+
+- /
+- /feed
+- /jobs
+- /jobs/:id/apply
+- /favourites
+- /my-candidatures
+- /profile
+- /companies
+- /login
+- /register
+- /employer/home
+- /employer/company
+- /employer/jobs/create
+- /employer/applications
+- /admin
+
+Admin route protection:
+- Checks auth token from localStorage
+- Calls /user to verify role = admin
+- Redirects to login or home when unauthorized
+
+## API Notes
+
+- Axios client is configured in [src/axios.js](src/axios.js)
+- Dev server proxy forwards /api requests to backend
+- Backend expected at http://localhost:8000
+
+## Static HTML Pages (Generated)
+
+Pure HTML mock pages exist in the project root and can be used for quick UI preview:
+
+- [../home.html](../home.html)
+- [../login.html](../login.html)
+- [../register.html](../register.html)
+- [../admin.html](../admin.html)
+- [../feed.html](../feed.html)
+- [../jobs.html](../jobs.html)
+- [../apply-job.html](../apply-job.html)
+- [../favourites.html](../favourites.html)
+- [../my-candidatures.html](../my-candidatures.html)
+- [../profile.html](../profile.html)
+- [../companies.html](../companies.html)
+- [../employer-home.html](../employer-home.html)
+- [../employer-company.html](../employer-company.html)
+- [../employer-post-job.html](../employer-post-job.html)
+- [../employer-applications.html](../employer-applications.html)
+
+## Common Commands
+
+```bash
+# start dev server
+npm run dev
+
+# production build
+npm run build
+
+# preview build
+npm run preview
+```
+
+## Troubleshooting
+
+If you see Tailwind utility errors during dev:
+
+1. Stop dev server
+2. Ensure dependencies are installed
+3. Restart with npm run dev
+4. Verify Tailwind plugin setup in [vite.config.js](vite.config.js)
+
+If API calls fail:
+
+1. Confirm backend is running at http://localhost:8000
+2. Check proxy in [vite.config.js](vite.config.js)
+3. Inspect request base URL in [src/axios.js](src/axios.js)
