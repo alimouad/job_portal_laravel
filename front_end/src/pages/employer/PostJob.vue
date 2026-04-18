@@ -41,8 +41,6 @@ const canSubmit = computed(() => {
   );
 });
 
-const hasCompany = computed(() => myCompanies.value.length > 0);
-
 async function loadMeta() {
   loadingMeta.value = true;
   apiError.value = '';
@@ -57,7 +55,7 @@ async function loadMeta() {
     const companies = companiesResponse?.data ?? [];
     const userId = user?.id;
 
-    myCompanies.value = companies.filter((company) => company.user_id === userId);
+    myCompanies.value = companies.filter((company) => Number(company.user_id) === Number(userId));
     categories.value = categoriesResponse?.data ?? [];
 
     if (myCompanies.value.length === 1) {
@@ -145,11 +143,11 @@ onMounted(loadMeta);
             Loading job form...
           </p>
 
-          <p v-else-if="apiError && !hasCompany" class="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-700">
+          <p v-else-if="apiError && myCompanies.length === 0" class="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-700">
             {{ apiError }}
           </p>
 
-          <div v-else-if="!hasCompany" class="rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-800">
+          <div v-else-if="myCompanies.length === 0" class="rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-800">
             You need a company profile before posting jobs.
             <router-link to="/employer/company" class="ml-1 font-black underline">Create company profile</router-link>
           </div>
@@ -214,7 +212,7 @@ onMounted(loadMeta);
               </button>
             </div>
 
-            <p v-if="apiError && hasCompany" class="text-sm font-bold text-red-600">{{ apiError }}</p>
+            <p v-if="apiError && myCompanies.length > 0" class="text-sm font-bold text-red-600">{{ apiError }}</p>
           </form>
         </div>
       </div>

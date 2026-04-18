@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -16,6 +17,18 @@ class CompanyController extends Controller
 
     public function store(Request $request): JsonResponse
     {
+        $user = $request->user();
+
+        if ($user->role !== 'employer') {
+            throw new AuthorizationException('Only employers can create a company.');
+        }
+
+        if (Company::where('user_id', $user->id)->exists()) {
+            return response()->json([
+                'message' => 'You already have a company.',
+            ], 409);
+        }
+
         $payload = $request->all();
         $payload['size'] = $payload['size'] ?? $payload['companySize'] ?? null;
 
@@ -31,7 +44,7 @@ class CompanyController extends Controller
             'logo' => ['nullable', 'string', 'max:1000'],
         ])->validate();
 
-        $validated['user_id'] = $request->user()->id;
+        $validated['user_id'] = $user->id;
 
         $company = Company::create($validated);
 

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import HomeLayout from '@/layouts/HomeLayout.vue';
 import axiosClient from '@/axios';
 
@@ -26,8 +26,6 @@ const statusClass = {
   accepted: 'bg-green-100 text-green-700',
   rejected: 'bg-red-100 text-red-700',
 };
-
-const isEmpty = computed(() => !loading.value && !errorMessage.value && applications.value.length === 0);
 
 const formatStatus = (status) => {
   if (!status) {
@@ -192,7 +190,7 @@ onMounted(() => {
           <article v-for="i in 4" :key="`loading-${i}`" class="h-34 animate-pulse rounded-3xl border border-[#E9E1C8] bg-white"></article>
         </div>
 
-        <div v-else-if="isEmpty" class="rounded-3xl border border-[#E9E1C8] bg-white p-10 text-center shadow-sm">
+        <div v-else-if="!errorMessage && applications.length === 0" class="rounded-3xl border border-[#E9E1C8] bg-white p-10 text-center shadow-sm">
           <h2 class="text-2xl font-black text-[#1A1A1A]">No applications found</h2>
           <p class="mt-2 text-sm font-medium text-[#666]">Try changing your filters or post more jobs to receive candidates.</p>
         </div>

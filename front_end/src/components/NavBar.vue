@@ -14,8 +14,12 @@ const isEmployer = computed(() => {
   return user.value?.role === 'employer';
 });
 
+const isAdmin = computed(() => {
+  return user.value?.role === 'admin';
+});
+
 const isJobSeeker = computed(() => {
-  return isAuthenticated.value && !isEmployer.value;
+  return isAuthenticated.value && !isEmployer.value && !isAdmin.value;
 });
 
 const currentUser = computed(() => user.value);
@@ -104,12 +108,26 @@ onMounted(loadCurrentUser);
               Applications
             </RouterLink>
 
+            <RouterLink v-if="isAdmin" to="/admin" class="hidden lg:flex items-center gap-2 rounded-xl bg-[#111] px-4 py-2 text-[10px] font-black uppercase tracking-widest text-white hover:bg-[#FFCD1F] hover:text-black transition-all">
+              Admin
+            </RouterLink>
+
           </div>
 
           <RouterLink v-if="isEmployer" to="/employer/home" class="flex items-center gap-3 pl-2 group">
             <div class="h-9 w-9 rounded-full bg-[#FFFDF5] border-2 border-[#FFCD1F] p-0.5 transition-transform group-hover:scale-110">
               <div class="h-full w-full rounded-full bg-slate-200 flex items-center justify-center text-[10px] font-black text-slate-500">
                 {{ currentUser?.full_name?.substring(0, 1) || 'U' }}
+              </div>
+            </div>
+            <button @click="handleLogout" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-red-500 transition-colors">
+              Exit
+            </button>
+          </RouterLink>
+          <RouterLink v-if="isAdmin" to="/admin" class="flex items-center gap-3 pl-2 group">
+            <div class="h-9 w-9 rounded-full bg-[#FFFDF5] border-2 border-[#FFCD1F] p-0.5 transition-transform group-hover:scale-110">
+              <div class="h-full w-full rounded-full bg-slate-200 flex items-center justify-center text-[10px] font-black text-slate-500">
+                {{ currentUser?.full_name?.substring(0, 1) || 'A' }}
               </div>
             </div>
             <button @click="handleLogout" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-red-500 transition-colors">

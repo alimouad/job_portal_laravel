@@ -8,22 +8,6 @@ const jobs = ref([]);
 const dashboardLoading = ref(true);
 const dashboardError = ref('');
 
-const hasCompany = computed(() => !!company.value);
-
-const numberFormatter = new Intl.NumberFormat('en-US');
-
-const normalizeCollection = (payload) => {
-  if (Array.isArray(payload)) {
-    return payload;
-  }
-
-  if (Array.isArray(payload?.data)) {
-    return payload.data;
-  }
-
-  return [];
-};
-
 const fetchPaginated = async (url, params = {}) => {
   let page = 1;
   let lastPage = 1;
@@ -34,7 +18,7 @@ const fetchPaginated = async (url, params = {}) => {
       params: { ...params, page },
     });
 
-    const chunk = normalizeCollection(data);
+    const chunk = Array.isArray(data) ? data : Array.isArray(data?.data) ? data.data : [];
 
     if (chunk.length === 0) {
       break;
@@ -66,7 +50,7 @@ const quickStats = computed(() => {
     { label: 'Active Jobs', value: String(activeJobs).padStart(2, '0') },
     { label: 'Categories', value: String(categoriesCount).padStart(2, '0') },
     { label: 'Locations', value: String(locationsCount).padStart(2, '0') },
-    { label: 'Avg Salary', value: averageSalary ? `$${numberFormatter.format(averageSalary)}` : '$0' },
+    { label: 'Avg Salary', value: averageSalary ? `$${averageSalary.toLocaleString()}` : '$0' },
   ];
 });
 
@@ -77,16 +61,14 @@ const recentJobs = computed(() => {
 });
 
 const activities = computed(() => {
-  if (!hasCompany.value) {
+  if (!company.value) {
     return ['Your employer dashboard will unlock after creating your company profile.'];
   }
 
   const totalJobs = jobs.value.length;
   const categoriesCount = new Set(jobs.value.map((job) => job.category?.name).filter(Boolean)).size;
 
-  const latestJob = [...jobs.value]
-    .sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime())
-    .at(0);
+  const latestJob = recentJobs.value[0];
 
   const latestJobText = latestJob
     ? `Latest post: ${latestJob.title} (${latestJob.type || 'type not specified'}).`
@@ -273,7 +255,7 @@ onMounted(fetchDashboard);
                 {{ dashboardError }}
               </p>
 
-              <div v-else-if="hasCompany" class="mt-5 space-y-3">
+              <div v-else-if="company" class="mt-5 space-y-3">
                 <article
                   v-for="detail in companyDetails"
                   :key="detail.label"

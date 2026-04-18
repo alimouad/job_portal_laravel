@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\CategoryController;
@@ -45,4 +46,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('blog-posts', BlogPostController::class)->only(['store', 'update', 'destroy']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::get('/admin/overview', [AdminController::class, 'overview']);
 });

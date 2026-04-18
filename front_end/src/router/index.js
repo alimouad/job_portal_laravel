@@ -17,6 +17,7 @@ import EmployerCompany from '@/pages/employer/Company.vue';
 import EmployerHome from '@/pages/employer/Home.vue';
 import EmployerPostJob from '@/pages/employer/PostJob.vue';
 import EmployerApplications from '@/pages/employer/Applications.vue';
+import AdminDashboard from '@/pages/admin/Dashboard.vue';
 
 
 const router = createRouter({
@@ -92,27 +93,39 @@ const router = createRouter({
             name: 'employer-applications',
             component: EmployerApplications,
         },
+                {
+                        path: '/admin',
+                        name: 'admin-dashboard',
+                        component: AdminDashboard,
+                },
     ],
 });
 
-// router.beforeEach(async (to) => {
-//   const isAdminRoute = to.path.startsWith('/admin');
+router.beforeEach(async (to) => {
+    const isAdminRoute = to.path.startsWith('/admin');
 
-//   if (!isAdminRoute) {
-//     return true;
-//   }
+    if (!isAdminRoute) {
+        return true;
+    }
 
-//   try {
-//     const response = await axiosClient.get('/user');
-//     const role = response.data?.role ?? 'USER';
+    const hasToken = Boolean(localStorage.getItem('auth_token'));
 
-//     if (role !== 'ADMIN') {
-//       return { name: 'home' };
-//     }
-//     return true;
-//   } catch {
-//     return { name: 'login' };
-//   }
-// });
+    if (!hasToken) {
+        return { name: 'login' };
+    }
+
+    try {
+        const response = await axiosClient.get('/user');
+        const role = response.data?.role ?? '';
+
+        if (role !== 'admin') {
+            return { name: 'home' };
+        }
+
+        return true;
+    } catch {
+        return { name: 'login' };
+    }
+});
 
 export default router;
