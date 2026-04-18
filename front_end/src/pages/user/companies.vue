@@ -76,7 +76,7 @@ const summaryText = computed(() => {
 
 <template>
   <HomeLayout>
-    <section class="relative overflow-hidden bg-[#f7efd8] pb-20 pt-16">
+    <section class="relative overflow-hidden bg-[#FFFDF5] pb-20 pt-16">
       <div class="pointer-events-none absolute inset-0 -z-10">
         <div class="absolute -left-20 top-0 h-96 w-96 rounded-full bg-[#ffcd1f]/20 blur-[120px]"></div>
         <div class="absolute right-0 top-20 h-80 w-80 rounded-full bg-white/60 blur-[120px]"></div>

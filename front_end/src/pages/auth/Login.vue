@@ -54,7 +54,7 @@ async function handleLogin() {
             localStorage.setItem('auth_user', JSON.stringify(data.user));
         }
 
-        router.push('/home');
+        router.push('/');
     } catch (error) {
         apiError.value = error?.response?.data?.message || 'Login failed. Please check your credentials.';
     } finally {

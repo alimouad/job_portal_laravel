@@ -6,7 +6,7 @@
         <div>
           <div class="flex items-center gap-2">
             <div class="h-8 w-9 rounded-md bg-[#ffcd1f]"></div>
-            <span class="text-base font-extrabold">Logo</span>
+            <span class="text-base font-extrabold">Job Finder</span>
           </div>
           <p class="mt-4 text-sm text-white/60">Worlds best hiring platform for jobseekers and employers.</p>
         </div>

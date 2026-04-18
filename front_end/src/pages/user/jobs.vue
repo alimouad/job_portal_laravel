@@ -113,9 +113,9 @@ const toggleFavourite = async (jobId) => {
 
 <template>
     <HomeLayout>
-        <div class="min-h-screen text-slate-900 bg-white">
+        <div class="min-h-screen text-slate-900 bg-[#FFFDF5]">
             <!-- Header -->
-            <header class="bg-linear-to-b from-slate-50 to-white py-12 px-4">
+            <header class="bg-[#FFFDF5] py-12 px-4">
                 <div class="max-w-4xl mx-auto text-center mb-8">
                     <h1 class="text-4xl md:text-5xl font-black mb-4">Find Your Next Job</h1>
                     <p class="text-slate-600 mb-8">Search from {{ jobs.length }} available positions</p>

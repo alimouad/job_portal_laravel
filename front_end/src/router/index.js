@@ -6,6 +6,8 @@ import axiosClient from '@/axios.js';
 import Login from '@/pages/auth/Login.vue';  
 import Register from '@/pages/auth/Register.vue';
 import Home from '@/pages/Home.vue';
+import Feed from '@/pages/user/Feed.vue';
+import Profile from '@/pages/user/Profile.vue';
 import CompaniesIndex from '@/pages/user/companies.vue';
 import UserJobs from '@/pages/user/jobs.vue';
 import ApplyJob from '@/pages/user/ApplyJob.vue';
@@ -14,15 +16,22 @@ import MyCandidatures from '@/pages/user/MyCandidatures.vue';
 import EmployerCompany from '@/pages/employer/Company.vue';
 import EmployerHome from '@/pages/employer/Home.vue';
 import EmployerPostJob from '@/pages/employer/PostJob.vue';
+import EmployerApplications from '@/pages/employer/Applications.vue';
+import AdminDashboard from '@/pages/admin/Dashboard.vue';
 
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
-            path: '/home',
+            path: '/',
             name: 'home',
             component: Home,
+        },
+        {
+            path: '/feed',
+            name: 'feed',
+            component: Feed,
         },
         {
             path: '/jobs',
@@ -43,6 +52,11 @@ const router = createRouter({
             path: '/my-candidatures',
             name: 'my-candidatures',
             component: MyCandidatures,
+        },
+        {
+            path: '/profile',
+            name: 'profile',
+            component: Profile,
         },
         {
             path: '/companies',
@@ -74,27 +88,44 @@ const router = createRouter({
             name: 'employer-post-job',
             component: EmployerPostJob,
         },
+        {
+            path:'/employer/applications',
+            name: 'employer-applications',
+            component: EmployerApplications,
+        },
+                {
+                        path: '/admin',
+                        name: 'admin-dashboard',
+                        component: AdminDashboard,
+                },
     ],
 });
 
-// router.beforeEach(async (to) => {
-//   const isAdminRoute = to.path.startsWith('/admin');
+router.beforeEach(async (to) => {
+    const isAdminRoute = to.path.startsWith('/admin');
 
-//   if (!isAdminRoute) {
-//     return true;
-//   }
+    if (!isAdminRoute) {
+        return true;
+    }
 
-//   try {
-//     const response = await axiosClient.get('/user');
-//     const role = response.data?.role ?? 'USER';
+    const hasToken = Boolean(localStorage.getItem('auth_token'));
 
-//     if (role !== 'ADMIN') {
-//       return { name: 'home' };
-//     }
-//     return true;
-//   } catch {
-//     return { name: 'login' };
-//   }
-// });
+    if (!hasToken) {
+        return { name: 'login' };
+    }
+
+    try {
+        const response = await axiosClient.get('/user');
+        const role = response.data?.role ?? '';
+
+        if (role !== 'admin') {
+            return { name: 'home' };
+        }
+
+        return true;
+    } catch {
+        return { name: 'login' };
+    }
+});
 
 export default router;

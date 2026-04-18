@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Application;
 use App\Models\Job;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class JobController extends Controller
 {
@@ -55,12 +57,22 @@ class JobController extends Controller
 
     public function store(Request $request): JsonResponse
     {
+        $user = $request->user();
+
+        if ($user->role !== 'employer') {
+            throw new AuthorizationException('Only employers can create jobs.');
+        }
+
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'location' => ['required', 'string', 'max:255'],
             'salary' => ['required', 'numeric', 'min:0'],
-            'company_id' => ['required', 'integer', 'exists:companies,id'],
+            'company_id' => [
+                'required',
+                'integer',
+                Rule::exists('companies', 'id')->where('user_id', $user->id),
+            ],
             'category_id' => ['required', 'integer', 'exists:categories,id'],
             'type' => ['required', 'in:full-time,part-time,remote,internship,freelance'],
         ]);
@@ -100,6 +112,12 @@ class JobController extends Controller
 
     public function destroy(Job $job): JsonResponse
     {
+        $user = request()->user();
+
+        if ($user->role !== 'admin' && $job->company->user_id !== $user->id) {
+            throw new AuthorizationException('You are not allowed to delete this job.');
+        }
+
         $job->delete();
 
         return response()->json([

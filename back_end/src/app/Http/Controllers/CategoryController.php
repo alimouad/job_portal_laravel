@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -16,6 +17,8 @@ class CategoryController extends Controller
 
     public function store(Request $request): JsonResponse
     {
+        $this->authorizeAdmin($request);
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255', 'unique:categories,name'],
             'description' => ['nullable', 'string', 'max:1000'],
@@ -37,6 +40,8 @@ class CategoryController extends Controller
 
     public function update(Request $request, Category $category): JsonResponse
     {
+        $this->authorizeAdmin($request);
+
         $validated = $request->validate([
             'name' => ['sometimes', 'required', 'string', 'max:255', Rule::unique('categories', 'name')->ignore($category->id)],
             'description' => ['sometimes', 'nullable', 'string', 'max:1000'],
@@ -53,10 +58,19 @@ class CategoryController extends Controller
 
     public function destroy(Category $category): JsonResponse
     {
+        $this->authorizeAdmin(request());
+
         $category->delete();
 
         return response()->json([
             'message' => 'Category deleted successfully.',
         ]);
+    }
+
+    protected function authorizeAdmin(Request $request): void
+    {
+        if ($request->user()?->role !== 'admin') {
+            throw new AuthorizationException('Only admins can manage categories.');
+        }
     }
 }
