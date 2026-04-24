@@ -12,9 +12,11 @@ const loading = ref(true);
 const submitting = ref(false);
 const error = ref('');
 const successMessage = ref('');
+const selectedCvName = ref('');
 
 const form = ref({
     cover_letter: '',
+    cv: null,
 });
 
 const jobId = computed(() => route.params.id);
@@ -39,8 +41,8 @@ onMounted(() => {
 
 // Submit application
 const submitApplication = async () => {
-    if (!form.value.cover_letter.trim()) {
-        error.value = 'Please write a cover letter';
+    if (!form.value.cv) {
+        error.value = 'Please upload your CV.';
         return;
     }
 
@@ -49,8 +51,14 @@ const submitApplication = async () => {
     successMessage.value = '';
 
     try {
-        const res = await axiosClient.post(`/jobs/${jobId.value}/apply`, {
-            cover_letter: form.value.cover_letter.trim(),
+        const payload = new FormData();
+        payload.append('cover_letter', form.value.cover_letter.trim());
+        payload.append('cv', form.value.cv);
+
+        const res = await axiosClient.post(`/jobs/${jobId.value}/apply`, payload, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
         });
 
         successMessage.value = res.data?.message || 'Application submitted successfully!';
@@ -63,6 +71,12 @@ const submitApplication = async () => {
     } finally {
         submitting.value = false;
     }
+};
+
+const handleCvUpload = (event) => {
+    const [file] = event?.target?.files || [];
+    form.value.cv = file || null;
+    selectedCvName.value = file?.name || '';
 };
 
 const formatCurrency = (val) => {
@@ -170,6 +184,20 @@ const getInitials = (name) => {
                         </div>
 
                         <form @submit.prevent="submitApplication" class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-900 mb-2">
+                                    CV / Resume <span class="text-red-500">*</span>
+                                </label>
+                                <input
+                                    type="file"
+                                    accept=".pdf,.doc,.docx"
+                                    @change="handleCvUpload"
+                                    class="w-full cursor-pointer rounded-lg border-2 border-dashed border-slate-300 bg-white px-4 py-3 text-sm text-slate-700 file:mr-4 file:rounded-md file:border-0 file:bg-slate-900 file:px-3 file:py-2 file:text-xs file:font-bold file:text-white hover:border-yellow-400"
+                                />
+                                <p class="mt-2 text-xs text-slate-500">Accepted formats: PDF, DOC, DOCX (max 5MB)</p>
+                                <p v-if="selectedCvName" class="mt-1 text-xs font-semibold text-slate-700">Selected file: {{ selectedCvName }}</p>
+                            </div>
+
                             <!-- Cover Letter -->
                             <div>
                                 <label class="block text-sm font-bold text-slate-900 mb-2">
@@ -197,7 +225,7 @@ const getInitials = (name) => {
                                 </button>
                                 <button
                                     type="submit"
-                                    :disabled="submitting || !form.cover_letter.trim()"
+                                    :disabled="submitting || !form.cv"
                                     class="flex-1 px-6 py-3 bg-slate-900 text-white rounded-lg font-bold hover:bg-black transition disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {{ submitting ? 'Submitting...' : 'Submit Application' }}

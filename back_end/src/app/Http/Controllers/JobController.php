@@ -129,6 +129,7 @@ class JobController extends Controller
     {
         $validated = $request->validate([
             'cover_letter' => ['nullable', 'string'],
+            'cv' => ['required', 'file', 'mimes:pdf,doc,docx', 'max:5120'],
         ]);
 
         $job = Job::findOrFail($id);
@@ -145,11 +146,14 @@ class JobController extends Controller
             ], 409);
         }
 
+        $cvPath = $request->file('cv')->store('application-cvs', 'public');
+
         $application = Application::create([
             'user_id' => $userId,
             'job_id' => $job->id,
             'status' => 'pending',
             'cover_letter' => $validated['cover_letter'] ?? null,
+            'cv_path' => $cvPath,
         ]);
 
         return response()->json([

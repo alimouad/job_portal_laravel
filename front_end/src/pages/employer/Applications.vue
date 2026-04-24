@@ -111,6 +111,10 @@ const goToPage = (page) => {
   loadApplications(page);
 };
 
+const hasCv = (application) => {
+  return Boolean(application?.cv_url);
+};
+
 onMounted(() => {
   loadApplications(1);
 });
@@ -241,6 +245,19 @@ onMounted(() => {
               <p><span class="font-black text-[#1A1A1A]">Applied:</span> {{ formatAppliedAt(application.created_at) }}</p>
               <p><span class="font-black text-[#1A1A1A]">Salary:</span> ${{ Number(application.job?.salary || 0).toLocaleString() }}</p>
               <p><span class="font-black text-[#1A1A1A]">Type:</span> {{ application.job?.type || 'N/A' }}</p>
+            </div>
+
+            <div class="mt-4">
+              <a
+                v-if="hasCv(application)"
+                :href="application.cv_url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center rounded-xl border border-[#1A1A1A] px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-[#1A1A1A] transition hover:bg-[#1A1A1A] hover:text-white"
+              >
+                View CV
+              </a>
+              <p v-else class="text-xs font-semibold text-[#9B9B9B]">No CV uploaded.</p>
             </div>
 
             <p v-if="application.cover_letter" class="mt-4 rounded-2xl bg-[#FFFEF9] p-4 text-sm font-medium text-[#4A4A4A]">

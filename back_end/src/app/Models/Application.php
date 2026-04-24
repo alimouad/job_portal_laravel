@@ -15,7 +15,21 @@ class Application extends Model
         'job_id',
         'status',
         'cover_letter',
+        'cv_path',
     ];
+
+    protected $appends = [
+        'cv_url',
+    ];
+
+    public function getCvUrlAttribute(): ?string
+    {
+        if (!$this->cv_path) {
+            return null;
+        }
+
+        return asset('storage/'.$this->cv_path);
+    }
 
     public function user(): BelongsTo
     {
